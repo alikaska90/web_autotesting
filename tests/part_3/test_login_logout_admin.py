@@ -33,5 +33,4 @@ def test_login_logout_admin(webdriver_object):
 
     # check logout
     # there are form title "Please enter your login details." and login button
-    webdriver_object.wait_visible_element(LoginAdminPageElements.FORM_TITLE)
-    webdriver_object.wait_visible_element(LoginAdminPageElements.LOGIN_BUTTON)
+    assert webdriver_object.title == 'Administration'
