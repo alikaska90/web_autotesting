@@ -1,6 +1,7 @@
 import pytest
 
 from srv.constants import CURRENCY
+from srv.pages.base_page import BasePage
 from srv.pages.main_page import MainPageElements
 from srv.webdriver_object import WebdriverObject
 
@@ -14,14 +15,14 @@ def test_currency_main_and_catalog_pages(driver, base_url, url, currency):
     else:
         assert driver.title == 'Your Store'
     webdriver_object = WebdriverObject(driver)
-    main_page_elements = MainPageElements(currency)
-    webdriver_object.wait_visible_element(main_page_elements.CURRENCY_BUTTON).click()
+    base_page_top_currency = BasePage.Top.Currency(currency)
+    webdriver_object.wait_visible_element(base_page_top_currency.CURRENCY_BUTTON).click()
     # check currency menu
-    webdriver_object.wait_visible_element(main_page_elements.CURRENCY_MENU)
+    webdriver_object.wait_visible_element(base_page_top_currency.CURRENCY_MENU)
     # choose currency
-    webdriver_object.wait_visible_element(main_page_elements.change_currency()).click()
+    webdriver_object.wait_visible_element(base_page_top_currency.change_currency()).click()
     # check currency of product prices
-    prices_by_products = driver.find_elements(*main_page_elements.PRODUCT_PRICE)
+    prices_by_products = driver.find_elements(*MainPageElements.PRODUCT_PRICE)
     for product in prices_by_products:
         product_prices = list(product.text.replace('Ex Tax:', '').split())
         wrong_prices = [price for price in product_prices if CURRENCY[currency] not in price]
