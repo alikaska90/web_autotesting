@@ -2,7 +2,8 @@ import random
 
 import pytest
 
-from srv.pages.base_page import BasePage
+from srv.pages.elements.top_element import Top
+from srv.pages.elements.header_element import Header
 from srv.pages.main_page import MainPageElements
 from srv.pages.shopping_cart_page import ShoppingCartPageElements
 from srv.webdriver_object import WebdriverObject
@@ -36,16 +37,16 @@ def test_shopping_cart(webdriver_object):
     cart_add_button[0].click()
 
     # check product in cart dropdown menu
-    shopping_cart = webdriver_object.wait_visible_element(BasePage.Header.ShoppingCart.SHOPPING_CART)
+    shopping_cart = webdriver_object.wait_visible_element(Header.ShoppingCart.SHOPPING_CART)
     shopping_cart.click()
-    cart_dropdown = webdriver_object.wait_visible_element(BasePage.Header.ShoppingCart.CART_DROPDOWN)
-    product_in_cart = cart_dropdown.find_elements(*BasePage.Header.ShoppingCart.PRODUCT_IN_CART)
+    cart_dropdown = webdriver_object.wait_visible_element(Header.ShoppingCart.CART_DROPDOWN)
+    product_in_cart = cart_dropdown.find_elements(*Header.ShoppingCart.PRODUCT_IN_CART)
     assert len(product_in_cart) == 1, 'Incorrect number of products in cart'
-    product_name_in_cart = product_in_cart[0].find_element(*BasePage.Header.ShoppingCart.PRODUCT_NAME_IN_CART).text
+    product_name_in_cart = product_in_cart[0].find_element(*Header.ShoppingCart.PRODUCT_NAME_IN_CART).text
     assert product_name == product_name_in_cart
 
     # check product in cart on Shopping Cart page
-    top_shopping_cart = webdriver_object.wait_visible_element(BasePage.Top.ShoppingCart.SHOPPING_CART)
+    top_shopping_cart = webdriver_object.wait_visible_element(Top.ShoppingCart.SHOPPING_CART)
     top_shopping_cart.click()
     assert webdriver_object.title == 'Shopping Cart'
     product_table = webdriver_object.wait_visible_element(ShoppingCartPageElements.PRODUCT_TABLE)
