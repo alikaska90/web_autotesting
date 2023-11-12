@@ -19,4 +19,3 @@ def test_login_logout_admin(webdriver_object):
         .logout()
     login_page.check_login_button()
     assert webdriver_object.title == login_page.title
-

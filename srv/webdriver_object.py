@@ -33,4 +33,4 @@ class WebdriverObject:
         try:
             return WebDriverWait(self.driver, timeout).until(EC.alert_is_present())
         except TimeoutException:
-            raise AssertionError(f'Alert not found')
+            raise AssertionError('Alert not found')

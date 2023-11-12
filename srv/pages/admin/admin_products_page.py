@@ -31,4 +31,3 @@ class AdminProductsPage(BasePage):
 
     def alert(self):
         return self.element(self.ALERT).text
-
