@@ -4,7 +4,7 @@ from srv.pages.elements.top_element import Top
 from srv.pages.elements.header_element import Header
 from srv.pages.main_page import MainPage
 from srv.pages.shopping_cart_page import ShoppingCartPage
-from srv.random.random_values import random_int
+from srv.random_values import random_int
 from srv.webdriver_object import WebdriverObject
 
 

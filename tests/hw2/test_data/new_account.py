@@ -1,5 +1,5 @@
 from srv.pages.account.data.account_data import RegistrationData
-from srv.random.random_values import random_string, random_email, random_phone
+from srv.random_values import random_string, random_email, random_phone
 
 CORRECT_REGISTRATION_DATA = RegistrationData(
     firstname=random_string(),
