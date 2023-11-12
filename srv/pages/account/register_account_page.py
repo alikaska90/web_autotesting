@@ -21,37 +21,13 @@ class RegisterAccountPage(BasePage):
         super().__init__(webdriver_object)
         self.title = 'Register Account'
 
-    def fill_firstname(self, firstname=None):
-        self.input(self.element(self.FIRSTNAME), firstname)
-        return self
-
-    def fill_lastname(self, lastname=None):
-        self.input(self.element(self.LASTNAME), lastname)
-        return self
-
-    def fill_email(self, email=None):
-        self.input(self.element(self.EMAIL), email)
-        return self
-
-    def fill_phone(self, phone=None):
-        self.input(self.element(self.PHONE), phone)
-        return self
-
-    def fill_password(self, password=None):
-        self.input(self.element(self.PASSWORD), password)
-        return self
-
-    def fill_password_confirm(self, password_confirm=None):
-        self.input(self.element(self.PASSWORD_CONFIRM), password_confirm)
-        return self
-
     def fill_registration_form(self, data: RegistrationData):
-        self.fill_firstname(data.firstname) \
-            .fill_lastname(data.lastname) \
-            .fill_email(data.email) \
-            .fill_phone(data.phone) \
-            .fill_password(data.password) \
-            .fill_password_confirm(data.password_confirm)
+        self.input(self.element(self.FIRSTNAME), data.firstname)
+        self.input(self.element(self.LASTNAME), data.lastname)
+        self.input(self.element(self.EMAIL), data.email)
+        self.input(self.element(self.PHONE), data.phone)
+        self.input(self.element(self.PASSWORD), data.password)
+        self.input(self.element(self.PASSWORD_CONFIRM), data.password_confirm)
         return self
 
     def agree_to_privacy_policy(self):

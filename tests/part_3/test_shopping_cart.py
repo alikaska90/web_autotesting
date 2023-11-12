@@ -1,11 +1,10 @@
-import random
-
 import pytest
 
 from srv.pages.elements.top_element import Top
 from srv.pages.elements.header_element import Header
 from srv.pages.main_page import MainPage
 from srv.pages.shopping_cart_page import ShoppingCartPage
+from srv.random.random_values import random_int
 from srv.webdriver_object import WebdriverObject
 
 
@@ -15,19 +14,12 @@ def webdriver_object(driver, base_url):
     yield WebdriverObject(driver)
 
 
-def random_index(i_min, i_max, disable: tuple):
-    index = random.randint(i_min, i_max)
-    if index in disable:
-        return random_index(i_min, i_max, disable)
-    return index
-
-
 def test_shopping_cart(webdriver_object):
     main_page = MainPage(webdriver_object)
 
     products = main_page.products()
-    rand = random_index(0, len(products)-1, (2, 3))
-    random_product = products[rand]
+    random_index = random_int(0, len(products) - 1, (2, 3))
+    random_product = products[random_index]
     product_name_on_page = main_page.product_name(random_product)
     main_page.add_product_to_cart(random_product)
 

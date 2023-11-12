@@ -13,17 +13,9 @@ class AccountLoginPage(BasePage):
         super().__init__(webdriver_object)
         self.title = 'Account Login'
 
-    def fill_email(self, email=None):
-        self.input(self.element(self.EMAIL), email)
-        return self
-
-    def fill_password(self, password=None):
-        self.input(self.element(self.PASSWORD), password)
-        return self
-
     def fill_login_form(self, data: LoginData):
-        self.fill_email(data.email)
-        self.fill_password(data.password)
+        self.input(self.element(self.EMAIL), data.email)
+        self.input(self.element(self.PASSWORD), data.password)
         return self
 
     def click_login(self):

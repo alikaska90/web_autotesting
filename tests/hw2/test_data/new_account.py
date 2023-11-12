@@ -1,10 +1,11 @@
 from srv.pages.account.data.account_data import RegistrationData
+from srv.random.random_values import random_string, random_email, random_phone
 
 CORRECT_REGISTRATION_DATA = RegistrationData(
-    firstname='test',
-    lastname='test1',
-    email='test_test1@test.com',
-    phone='89004005060',
+    firstname=random_string(),
+    lastname=random_string(10),
+    email=random_email(),
+    phone=random_phone(),
     password='test',
     password_confirm='test'
 )
