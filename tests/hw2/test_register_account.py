@@ -18,7 +18,8 @@ def webdriver_object(driver, base_url):
 def test_user_registration_positive(webdriver_object):
     register_account_page = RegisterAccountPage(webdriver_object)
 
-    register_account_page.fill_registration_form(CORRECT_REGISTRATION_DATA) \
+    register_account_page \
+        .fill_registration_form(CORRECT_REGISTRATION_DATA) \
         .set_newsletter(True) \
         .agree_to_privacy_policy() \
         .click_continue()
