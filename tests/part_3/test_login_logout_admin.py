@@ -17,9 +17,11 @@ def test_login_logout_admin(webdriver_object):
     # login
     username = webdriver_object.wait_visible_element(LoginAdminPageElements.USERNAME)
     username.click()
+    username.clear()
     username.send_keys(ADMIN_USERNAME)
     password = webdriver_object.wait_visible_element(LoginAdminPageElements.PASSWORD)
     password.click()
+    password.clear()
     password.send_keys(ADMIN_PASSWORD)
     webdriver_object.wait_visible_element(LoginAdminPageElements.LOGIN_BUTTON).click()
 
