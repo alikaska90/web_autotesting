@@ -2,12 +2,11 @@ import pytest
 
 from srv.pages.account.account_login_page import AccountLoginPage
 from srv.pages.account.created_account_page import CreatedAccountPage
-from srv.pages.account.data.account_data import LoginData
 from srv.pages.account.my_account_page import MyAccountPage
 from srv.pages.elements.top_element import Top
 from srv.pages.account.register_account_page import RegisterAccountPage
 from srv.webdriver_object import WebdriverObject
-from tests.hw2.test_data.new_account import CORRECT_REGISTRATION_DATA
+from tests.hw2.test_data.new_account import CORRECT_REGISTRATION_DATA, LOGIN_DATA
 
 
 @pytest.fixture()
@@ -35,12 +34,8 @@ def test_user_registration_positive(webdriver_object):
     account_login_page = AccountLoginPage(webdriver_object)
     assert webdriver_object.title == account_login_page.title
 
-    login_data = LoginData(
-        email=CORRECT_REGISTRATION_DATA.email,
-        password=CORRECT_REGISTRATION_DATA.password
-    )
     account_login_page \
-        .fill_login_form(login_data) \
+        .fill_login_form(LOGIN_DATA) \
         .click_login()
 
     my_account_page = MyAccountPage(webdriver_object)
