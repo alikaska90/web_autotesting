@@ -1,6 +1,4 @@
-ADMIN_USERNAME = 'user'
-ADMIN_PASSWORD = 'bitnami'
-
+# opencart
 CURRENCY = {
     'EUR': '€',
     'GBP': '£',

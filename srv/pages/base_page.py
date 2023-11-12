@@ -1,30 +1,50 @@
-from selenium.webdriver.common.by import By
+from selenium.webdriver import ActionChains
+from selenium.webdriver.support.ui import Select
 
 
 class BasePage:
-    class Top:
-        """
-        Elements at Top of page
-        """
-        class Currency:
-            CURRENCY_BUTTON = (By.XPATH, '//*[@id="form-currency"]')
-            CURRENCY_MENU = (By.XPATH, '//*[@id="form-currency"]//*[@class="dropdown-menu"]')
+    def __init__(self, webdriver_object):
+        self.webdriver_object = webdriver_object
+        self.driver = webdriver_object.driver
 
-            def __init__(self, currency='USD'):
-                self.currency = currency
+    def click(self, element):
+        (ActionChains(self.driver).move_to_element(element).pause(0.1).click().perform())
 
-            def change_currency(self):
-                return By.XPATH, f'//button[@name="{self.currency}"]'
+    def input(self, element, value):
+        if not value:
+            return
+        self.click(element)
+        element.clear()
+        element.send_keys(value)
 
-        class ShoppingCart:
-            SHOPPING_CART = (By.XPATH, '//*[@title="Shopping Cart"]')
+    def element(self, locator: tuple, **kwargs):
+        return self.webdriver_object.wait_visible_element(locator, **kwargs)
 
-    class Header:
-        """
-        Elements in Header of page
-        """
-        class ShoppingCart:
-            SHOPPING_CART = (By.XPATH, '//*[@id="cart"]')
-            CART_DROPDOWN = (By.XPATH, '//*[@class="dropdown-menu pull-right"]')
-            PRODUCT_IN_CART = (By.XPATH, '//*[@class="table table-striped"]/tbody/tr')
-            PRODUCT_NAME_IN_CART = (By.XPATH, './/*[@class="text-left"]/a')
+    def elements(self, locator: tuple, **kwargs):
+        return self.webdriver_object.wait_visible_elements(locator, **kwargs)
+
+    def invisible_element(self, locator: tuple, **kwargs):
+        return self.webdriver_object.wait_element(locator, **kwargs)
+
+    def select_by_value(self, locator: tuple, value, **kwargs):
+        if not value:
+            return
+        select = Select(self.webdriver_object.wait_clickable_element(locator, **kwargs))
+        return select.select_by_value(value)
+
+    def check_element_visibility(self, locator: tuple, **kwargs) -> bool:
+        element = self.webdriver_object.wait_element(locator, **kwargs)
+        if element.is_displayed():
+            return True
+        return False
+
+    def base_alert(self):
+        alert = self.webdriver_object.wait_alert()
+        alert.accept()
+
+    def prompt_alert(self, accept=False):
+        alert = self.webdriver_object.wait_alert()
+        if accept:
+            alert.accept()
+            return
+        alert.dismiss()
