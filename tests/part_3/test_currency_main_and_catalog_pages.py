@@ -2,28 +2,39 @@ import pytest
 
 from srv.constants import CURRENCY
 from srv.pages.elements.top_element import Top
-from srv.pages.main_page import MainPageElements
+from srv.pages.main_page import MainPage
 from srv.webdriver_object import WebdriverObject
 
 
-@pytest.mark.parametrize('currency', ['EUR', 'GBP', 'USD'])
-@pytest.mark.parametrize('url', ['', '/desktops'], ids=['main page', 'catalog desktop page'])
-def test_currency_main_and_catalog_pages(driver, base_url, url, currency):
-    driver.get(base_url + url)
-    if url:
-        assert driver.title == 'Desktops'
-    else:
-        assert driver.title == 'Your Store'
-    webdriver_object = WebdriverObject(driver)
-    base_page_top_currency = Top.Currency(currency)
-    webdriver_object.wait_visible_element(base_page_top_currency.CURRENCY_BUTTON).click()
-    # check currency menu
-    webdriver_object.wait_visible_element(base_page_top_currency.CURRENCY_MENU)
-    # choose currency
-    webdriver_object.wait_visible_element(base_page_top_currency.change_currency()).click()
-    # check currency of product prices
-    prices_by_products = driver.find_elements(*MainPageElements.PRODUCT_PRICE)
-    for product in prices_by_products:
-        product_prices = list(product.text.replace('Ex Tax:', '').split())
+@pytest.fixture()
+def webdriver_main_page(driver, base_url):
+    driver.get(base_url)
+    yield WebdriverObject(driver)
+
+
+@pytest.fixture()
+def webdriver_desktops(driver, base_url):
+    driver.get(base_url+'/desktops')
+    yield WebdriverObject(driver)
+
+
+def check_prices_with_new_currency(main_page, currency):
+    for product in main_page.products():
+        product_name = main_page.product_name(product)
+        product_prices = main_page.product_prices(product)
         wrong_prices = [price for price in product_prices if CURRENCY[currency] not in price]
-        assert not wrong_prices, f'Incorrect prices {wrong_prices} on page for currency {currency}'
+        assert not wrong_prices, f'Incorrect prices {wrong_prices} of {product_name} for currency {currency}'
+
+
+@pytest.mark.parametrize('currency', ['EUR', 'GBP', 'USD'])
+def test_currency_main_page(webdriver_main_page, currency):
+    Top.Currency(webdriver_main_page) \
+        .change_currency(currency)
+    check_prices_with_new_currency(MainPage(webdriver_main_page), currency)
+
+
+@pytest.mark.parametrize('currency', ['EUR', 'GBP', 'USD'])
+def test_currency_desktops_page(webdriver_desktops, currency):
+    Top.Currency(webdriver_desktops) \
+        .change_currency(currency)
+    check_prices_with_new_currency(MainPage(webdriver_desktops), currency)

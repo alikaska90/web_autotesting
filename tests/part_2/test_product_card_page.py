@@ -1,6 +1,6 @@
 import pytest
 
-from srv.pages.product_card_page import ProductCardElements
+from srv.pages.product_card_page import ProductCardPage
 from srv.webdriver_object import WebdriverObject
 
 
@@ -11,9 +11,10 @@ def webdriver_object(driver, base_url):
 
 
 def test_product_card_page(webdriver_object):
+    product_card_page = ProductCardPage(webdriver_object)
     assert webdriver_object.title == 'Samsung Galaxy Tab 10.1'
-    webdriver_object.wait_visible_element(ProductCardElements.WISH_LIST, timeout=1)
-    webdriver_object.wait_visible_element(ProductCardElements.COMPARE_PRODUCT, timeout=1)
-    webdriver_object.wait_visible_element(ProductCardElements.QUANTITY, timeout=1)
-    webdriver_object.wait_visible_element(ProductCardElements.ADD_TO_CART, timeout=1)
-    webdriver_object.wait_visible_element(ProductCardElements.WRITE_REVIEW, timeout=1)
+    product_card_page.element(product_card_page.WISH_LIST, timeout=1)
+    product_card_page.element(product_card_page.COMPARE_PRODUCT, timeout=1)
+    product_card_page.element(product_card_page.QUANTITY, timeout=1)
+    product_card_page.element(product_card_page.ADD_TO_CART, timeout=1)
+    product_card_page.element(product_card_page.WRITE_REVIEW, timeout=1)

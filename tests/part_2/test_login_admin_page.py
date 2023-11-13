@@ -1,6 +1,6 @@
 import pytest
 
-from srv.pages.login_admin_page import LoginAdminPageElements
+from srv.pages.admin.login_admin_page import LoginAdminPage
 from srv.webdriver_object import WebdriverObject
 
 
@@ -11,9 +11,10 @@ def webdriver_object(driver, base_url):
 
 
 def test_login_admin_page(webdriver_object):
-    assert webdriver_object.title == 'Administration'
-    webdriver_object.wait_visible_element(LoginAdminPageElements.USERNAME, timeout=1)
-    webdriver_object.wait_visible_element(LoginAdminPageElements.PASSWORD, timeout=1)
-    webdriver_object.wait_visible_element(LoginAdminPageElements.LOGIN_BUTTON, timeout=1)
-    webdriver_object.wait_visible_element(LoginAdminPageElements.FORGOTTEN_PASSWORD, timeout=1)
-    webdriver_object.wait_visible_element(LoginAdminPageElements.OPENCART, timeout=1)
+    login_admin_page = LoginAdminPage(webdriver_object)
+    assert webdriver_object.title == login_admin_page.title
+    login_admin_page.element(login_admin_page.USERNAME, timeout=1)
+    login_admin_page.element(login_admin_page.PASSWORD, timeout=1)
+    login_admin_page.element(login_admin_page.LOGIN_BUTTON, timeout=1)
+    login_admin_page.element(login_admin_page.FORGOTTEN_PASSWORD, timeout=1)
+    login_admin_page.element(login_admin_page.OPENCART, timeout=1)
