@@ -2,9 +2,7 @@ from selenium.webdriver.common.by import By
 
 
 class Header:
-    """
-    Elements in Header of page
-    """
+    """ Elements in Header of page """
 
     class ShoppingCart:
         SHOPPING_CART = (By.XPATH, '//*[@id="cart"]')

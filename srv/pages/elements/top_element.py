@@ -2,9 +2,7 @@ from selenium.webdriver.common.by import By
 
 
 class Top:
-    """
-    Elements at Top of page
-    """
+    """ Elements at Top of page """
 
     class Currency:
         CURRENCY_BUTTON = (By.XPATH, '//*[@id="form-currency"]')
