@@ -4,9 +4,7 @@ from srv.pages.base_page import BasePage
 
 
 class Top:
-    """
-    Elements at Top of page
-    """
+    """ Elements at Top of page """
 
     class Currency(BasePage):
         CURRENCY_BUTTON = (By.XPATH, '//*[@id="form-currency"]')

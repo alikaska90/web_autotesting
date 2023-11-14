@@ -4,9 +4,7 @@ from srv.pages.base_page import BasePage
 
 
 class Header:
-    """
-    Elements in Header of page
-    """
+    """ Elements in Header of page """
 
     class ShoppingCart(BasePage):
         SHOPPING_CART = (By.XPATH, '//*[@id="cart"]')
