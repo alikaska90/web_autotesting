@@ -1,6 +1,6 @@
 import pytest
 
-from srv.pages.register_account_page import RegisterAccountPageElements
+from srv.pages.account.register_account_page import RegisterAccountPage
 from srv.webdriver_object import WebdriverObject
 
 
@@ -11,9 +11,10 @@ def webdriver_object(driver, base_url):
 
 
 def test_register_account_page(webdriver_object):
-    assert webdriver_object.title == 'Register Account'
-    webdriver_object.wait_visible_element(RegisterAccountPageElements.LOGIN_PAGE, timeout=1)
-    webdriver_object.wait_visible_element(RegisterAccountPageElements.FIRSTNAME_FIELD, timeout=1)
-    webdriver_object.wait_visible_element(RegisterAccountPageElements.PASSWORD_FIELD, timeout=1)
-    webdriver_object.wait_visible_element(RegisterAccountPageElements.NEWSLETTER_YES, timeout=1)
-    webdriver_object.wait_visible_element(RegisterAccountPageElements.CONTINUE_BUTTON, timeout=1)
+    register_account_pege = RegisterAccountPage(webdriver_object)
+    assert webdriver_object.title == register_account_pege.title
+    register_account_pege.element(register_account_pege.LOGIN_PAGE, timeout=1)
+    register_account_pege.element(register_account_pege.FIRSTNAME, timeout=1)
+    register_account_pege.element(register_account_pege.PASSWORD, timeout=1)
+    register_account_pege.element(register_account_pege.NEWSLETTER_YES, timeout=1)
+    register_account_pege.element(register_account_pege.CONTINUE, timeout=1)

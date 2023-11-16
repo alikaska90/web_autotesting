@@ -1,6 +1,6 @@
 import pytest
 
-from srv.pages.catalog_desktop_page import CatalogDesktopPageElements
+from srv.pages.catalog.desktop_page import DesktopsPage
 from srv.webdriver_object import WebdriverObject
 
 
@@ -11,10 +11,12 @@ def webdriver_object(driver, base_url):
 
 
 def test_catalog_desktop_page(webdriver_object):
-    assert webdriver_object.title == 'Desktops'
-    webdriver_object.wait_visible_element(CatalogDesktopPageElements.DESKTOP_TITLE, timeout=1)
-    webdriver_object.wait_visible_element(CatalogDesktopPageElements.PRODUCT_COMPARE, timeout=1)
-    webdriver_object.wait_visible_element(CatalogDesktopPageElements.SORT_BY_LIST, timeout=1)
-    webdriver_object.wait_visible_element(CatalogDesktopPageElements.SHOW_LIST, timeout=1)
-    webdriver_object.wait_visible_element(CatalogDesktopPageElements.LIST_VIEW_BUTTON, timeout=1)
-    webdriver_object.wait_visible_element(CatalogDesktopPageElements.GRID_VIEW_BUTTON, timeout=1)
+    desktop_page = DesktopsPage(webdriver_object)
+    assert webdriver_object.title == desktop_page.title
+    desktop_page.heading(timeout=1)
+    desktop_page.element(desktop_page.PRODUCT_COMPARE, timeout=1)
+    desktop_page.element(desktop_page.SORT_BY_LIST, timeout=1)
+    desktop_page.element(desktop_page.SORT_BY_LIST, timeout=1)
+    desktop_page.element(desktop_page.SHOW_LIST, timeout=1)
+    desktop_page.element(desktop_page.LIST_VIEW, timeout=1)
+    desktop_page.element(desktop_page.GRID_VIEW, timeout=1)

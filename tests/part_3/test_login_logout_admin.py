@@ -1,8 +1,7 @@
 import pytest
 
-from srv.constants import ADMIN_USERNAME, ADMIN_PASSWORD
-from srv.pages.admin_main_page import AdminMainPageElements
-from srv.pages.login_admin_page import LoginAdminPageElements
+from srv.pages.admin.admin_main_page import AdminMainPage
+from srv.pages.admin.login_admin_page import LoginAdminPage
 from srv.webdriver_object import WebdriverObject
 
 
@@ -13,27 +12,10 @@ def webdriver_object(driver, base_url):
 
 
 def test_login_logout_admin(webdriver_object):
-    assert webdriver_object.title == 'Administration'
-    # login
-    username = webdriver_object.wait_visible_element(LoginAdminPageElements.USERNAME)
-    username.click()
-    username.clear()
-    username.send_keys(ADMIN_USERNAME)
-    password = webdriver_object.wait_visible_element(LoginAdminPageElements.PASSWORD)
-    password.click()
-    password.clear()
-    password.send_keys(ADMIN_PASSWORD)
-    webdriver_object.wait_visible_element(LoginAdminPageElements.LOGIN_BUTTON).click()
-
-    # check login
-    assert webdriver_object.title == 'Dashboard'
-    # there is logout button
-    logout = webdriver_object.wait_visible_element(AdminMainPageElements.LOGOUT_BUTTON)
-
-    # logout
-    logout.click()
-
-    # check logout
-    assert webdriver_object.title == 'Administration'
-    # there is login button
-    webdriver_object.wait_visible_element(LoginAdminPageElements.LOGIN_BUTTON)
+    login_page = LoginAdminPage(webdriver_object)
+    login_page.login()
+    AdminMainPage.Header(webdriver_object) \
+        .check_logout_button() \
+        .logout()
+    login_page.check_login_button()
+    assert webdriver_object.title == login_page.title
